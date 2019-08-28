@@ -44,6 +44,14 @@ def write_conf(name, conf_path, text):
     conf = open("{}/{}".format(conf_path, name), "w")
     conf.write(text)
     conf.close()
+    return
+
+if not os.path.exists(conf_path):
+    try:
+        os.makedirs(conf_path)
+    except OSError as exc: # Guard against race condition
+        if exc.errno != errno.EEXIST:
+            raise
 
 template_conf = open(template_conf_path, "r").read()
 template_service = open(template_service_path, "r").read()
