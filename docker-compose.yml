@@ -1,0 +1,18 @@
+version: "3"
+services:
+  regtest-0:
+    image: kylemanna/bitcoind
+    command: bitcoind -regtest -conf=/bitcoin/conf/0.conf
+    ports:
+      - "19000:19000"
+      - "19001:19001"
+    volumes:
+      - ./conf:/bitcoin/conf
+  regtest-1:
+    image: kylemanna/bitcoind
+    command: bitcoind -regtest -conf=/bitcoin/conf/1.conf
+    ports:
+      - "19010:19010"
+      - "19011:19011"
+    volumes:
+      - ./conf:/bitcoin/conf

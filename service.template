@@ -1,0 +1,8 @@
+  regtest-$ID:
+    image: kylemanna/bitcoind
+    command: bitcoind -regtest -conf=/bitcoin/conf/$CONF_NAME
+    ports:
+      - "$PORT:$PORT"
+      - "$RPC_PORT:$RPC_PORT"
+    volumes:
+      - ./conf:/bitcoin/conf
