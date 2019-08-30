@@ -4,7 +4,7 @@ services:
     image: kylemanna/bitcoind
     command: bitcoind -regtest -conf=/bitcoin/conf/0.conf
     ports:
-      - "19000:19000"
+      - "19000:18444"
       - "19001:19001"
     volumes:
       - ./conf:/bitcoin/conf
@@ -12,7 +12,15 @@ services:
     image: kylemanna/bitcoind
     command: bitcoind -regtest -conf=/bitcoin/conf/1.conf
     ports:
-      - "19010:19010"
+      - "19010:18444"
       - "19011:19011"
+    volumes:
+      - ./conf:/bitcoin/conf
+  regtest-2:
+    image: kylemanna/bitcoind
+    command: bitcoind -regtest -conf=/bitcoin/conf/2.conf
+    ports:
+      - "19020:18444"
+      - "19021:19021"
     volumes:
       - ./conf:/bitcoin/conf

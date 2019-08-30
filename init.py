@@ -11,26 +11,37 @@ PORT = int(os.getenv("PORT", "19000"))
 RPC_PORT = int(os.getenv("RPC_PORT", PORT + 1))
 STEP = int(os.getenv("STEP", 10))
 
+def add_node(index, nums, port_0, rpc_port_0, step, service):
+    template = ""
+    for i in range(nums):
+        if i == index:
+            continue
+        template += "addnode={}-{}:18444\n".format(service, i)
+    return template
+
 def get_env(nums=1, port_0=19000, rpc_port_0=19001, step=10):
+    service = "regtest"
     def build_item(index):
         if index == 0:
             return {
-                "$ID": "0",
+                "$SERVICE_NAME": "{}-{}".format(service, index),
                 "$CONF_NAME": "0.conf",
                 "$LISTEN": "1",
                 "$CONNECT_HOST": "0.0.0.0",
                 "$CONNECT_PORT": "{}".format(port_0),
                 "$PORT": "{}".format(port_0),
                 "$RPC_PORT": "{}".format(rpc_port_0),
+                "$ADD_NODE": add_node(index, nums, port_0, rpc_port_0, step, service),
             }
         return {
-            "$ID": "{}".format(index),
+            "$SERVICE_NAME": "{}-{}".format(service, index),
             "$CONF_NAME": "{}.conf".format(index),
-            "$LISTEN": "0",
+            "$LISTEN": "1",
             "$CONNECT_HOST": "0.0.0.0",
-            "$CONNECT_PORT": "{}".format(port_0),
+            "$CONNECT_PORT": "{}".format(port_0 + (index-1) * step),
             "$PORT": "{}".format(str(port_0 + index * step)),
             "$RPC_PORT": "{}".format(str(rpc_port_0 + index * step)),
+            "$ADD_NODE": add_node(index, nums, port_0, rpc_port_0, step, service),
         }
     return list(map(build_item, range(nums)))
 
