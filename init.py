@@ -83,6 +83,6 @@ docker_compose.write(docker_services)
 docker_compose.close()
 
 print("env template init over")
-print("starting docker....")
-os.system("sudo docker-compose up")
+# print("starting docker....")
+# os.system("sudo docker-compose up")
 
